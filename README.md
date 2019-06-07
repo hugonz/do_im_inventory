@@ -1,17 +1,15 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+This role calls up the API for Digital Ocean v2 and brings all the droplets along with their tags. Optionally, the role allows for filtering by tags.
+
+This role came from the lack of a digital_ocean_droplet_facts module in mainline Ansible.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
 Role Variables
 --------------
-
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
 Dependencies
 ------------
