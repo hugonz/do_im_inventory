@@ -1,5 +1,4 @@
 tests/do_secrets.yml
 tests/ansible.cfg
-kkkk
 .vscode
 tests/test.retry
