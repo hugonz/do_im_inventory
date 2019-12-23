@@ -11,16 +11,9 @@
 - name: call the DO api and get all droplet information
   uri:
     url: "{{ gdoi_api_url }}"
-    body:
-    remote_src: no # not required. If C(no), the module will search for src on originating/master machine, if C(yes) the module will use the C(src) path on the remote/target machine.
     follow_redirects: all # not required. choices: all;none;safe. Whether or not the URI module should follow redirects. C(all) will follow all redirects. C(safe) will follow only "safe" redirects, where "safe" means that the client is only doing a GET or HEAD on the URI to which it is being redirected. C(none) will not follow any redirects. Note that C(yes) and C(no) choices are accepted for backwards compatibility, where C(yes) is the equivalent of C(all) and C(no) is the equivalent of C(safe). C(yes) and C(no) are deprecated and will be removed in some future version of Ansible.
-    force_basic_auth: no # not required. The library used by the uri module only sends authentication information when a webservice responds to an initial request with a 401 status. Since some basic auth services do not properly send a 401, logins will fail. This option forces the sending of the Basic authentication header upon initial request.
-    method: GET # not required. choices: GET;POST;PUT;HEAD;DELETE;OPTIONS;PATCH;TRACE;CONNECT;REFRESH. The HTTP method of the request or response. It MUST be uppercase.
     headers: 
       Authorization: Bearer {{ gdoi_token }}
-    timeout: 30 # not required. The socket level timeout in seconds
-    status_code: 200 # not required. A list of valid, numeric, HTTP status codes that signifies success of the request.
-    return_content: no # not required. Whether or not to return the body of the response as a "content" key in the dictionary result. If the reported Content-type is "application/json", then the JSON is additionally loaded into a key called C(json) in the dictionary results.
     validate_certs: yes # not required. If C(no), SSL certificates will not be validated.  This should only set to C(no) used on personally controlled sites using self-signed certificates.  Prior to 1.9.2 the code defaulted to C(no).
   register: gdoi_return_data
 
