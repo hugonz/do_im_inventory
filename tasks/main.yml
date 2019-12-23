@@ -1,7 +1,11 @@
 ---
+- name: get the API token from an environment variable
+  set_fact:
+    gdoi_token: "{{ lookup('ENV', 'do_TOKEN') | default(gdit_token) }}"
+
 - name: call the DO api and get all droplet information
   uri:
-    url: "{{ digital_ocean_v2_url}}"
+    url: "{{ gdoi_url }}"
     body:
     remote_src: no # not required. If C(no), the module will search for src on originating/master machine, if C(yes) the module will use the C(src) path on the remote/target machine.
     dest: undefined # not required. A path of where to download the file to (if desired). If I(dest) is a directory, the basename of the file on the remote server will be used.
@@ -13,7 +17,7 @@
     body_format: form-urlencoded # not required. choices: form-urlencoded;json;raw. The serialization format of the body. When set to C(json) or C(form-urlencoded), encodes the body argument, if needed, and automatically sets the Content-Type header accordingly. As of C(2.3) it is possible to override the `Content-Type` header, when set to C(json) or C(form-urlencoded) via the I(headers) option.
     password: undefined # not required. A password for the module to use for Digest, Basic or WSSE authentication.
     HEADER_: undefined # not required. Any parameter starting with "HEADER_" is a sent with your request as a header. For example, HEADER_Content-Type="application/json" would send the header "Content-Type" along with your request with a value of "application/json". This option is deprecated as of C(2.1) and will be removed in Ansible-2.9. Use I(headers) instead.
-      Authorization: Bearer {{ lookup('ENV','DO_TOKEN')}}
+      Authorization: Bearer {{ gdit_token }}
     client_key: undefined # not required. PEM formatted file that contains your private key to be used for SSL client authentication. If I(client_cert) contains both the certificate and key, this option is not required.
     src: undefined # not required. Path to file to be submitted to the remote server. Cannot be used with I(body).
     method: GET # not required. choices: GET;POST;PUT;HEAD;DELETE;OPTIONS;PATCH;TRACE;CONNECT;REFRESH. The HTTP method of the request or response. It MUST be uppercase.
@@ -24,8 +28,8 @@
     return_content: no # not required. Whether or not to return the body of the response as a "content" key in the dictionary result. If the reported Content-type is "application/json", then the JSON is additionally loaded into a key called C(json) in the dictionary results.
     validate_certs: yes # not required. If C(no), SSL certificates will not be validated.  This should only set to C(no) used on personally controlled sites using self-signed certificates.  Prior to 1.9.2 the code defaulted to C(no).
     client_cert: undefined # not required. PEM formatted certificate chain file to be used for SSL client authentication. This file can also include the key as well, and if the key is included, I(client_key) is not required
-  register: droplet_data
+  register: do_return_data
 
-- name: parse the result and set a fact as a return object
+# - name: parse the result and set a fact as a return object
 
 - name: create groups do_"tag", including do_ungrouped

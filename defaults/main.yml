@@ -1,2 +1,6 @@
 ---
 # defaults file for get_do_inventory
+
+#This is the group name to add hosts in by default. We should not pollute the inventory with hosts outside any groups.
+gdoi_default_target_group: digitalocean_droplets
+

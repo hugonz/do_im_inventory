@@ -1,7 +1,7 @@
 Role Name
 =========
 
-This role calls up the API for Digital Ocean v2 and brings all the droplets along with their tags. Optionally, the role allows for filtering by tags.
+This role calls up the API for Digital Ocean v2 and brings all the droplets along with their tags. Optionally, the role allows for filtering the returned inventory by tags.
 
 This role came from the lack of a digital_ocean_droplet_facts module in mainline Ansible.
 
@@ -10,6 +10,7 @@ Requirements
 
 Role Variables
 --------------
+gdoi_token: the DO API token, you should create one for your user n digitalocean.com. If not passed, the DO_TOKEN environment variable will be used.
 
 Dependencies
 ------------
