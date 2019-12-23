@@ -40,7 +40,7 @@ galaxy_info:
   #   - 7
   #   - 99.99
 
-  galaxy_tags: []
+  galaxy_tags: 
     - digitalocean
     - in-memory
     - inventory

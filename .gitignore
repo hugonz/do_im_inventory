@@ -2,3 +2,4 @@ tests/do_secrets.yml
 tests/ansible.cfg
 .vscode
 tests/test.retry
+*.retry

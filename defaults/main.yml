@@ -1,6 +1,6 @@
 ---
 # group name to add hosts in by default. We should not pollute the inventory with hosts outside any groups.
-gdoi_target_inventory_group: digitalocean_droplets
+gdoi_target_group: digitalocean_droplets
 
 # published URL for Digital Ocean API v2
 gdoi_api_url: https://api.digitalocean.com/v2/droplets
