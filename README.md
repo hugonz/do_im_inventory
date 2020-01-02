@@ -9,7 +9,7 @@ This role uses the json_query Ansible filter, so the [jmespath](http://jmespath.
 
 Role Variables
 --------------
-`gdoi_token`: the DO API token, you should create one for your user in digitalocean.com. If not passed, the DO_API_TOKEN environment variable will be used.
+`doim_token`: the DO API token, you should create one for your user in digitalocean.com. If not passed, the DO_API_TOKEN environment variable will be used.
 
 Dependencies
 ------------
