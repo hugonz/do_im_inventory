@@ -1,37 +1,51 @@
 Role Name
 =========
 
-This role calls up the API for Digital Ocean v2 and brings all the droplets along with their tags. Optionally, the role allows for filtering the returned inventory by tags.
-
-This role came from the lack of a digital_ocean_droplet_facts module in mainline Ansible.
+This role calls the v2 API for Digital Ocean and build an in-memory inventory for the user who owns the provided API key. I wrote this role to fix the lack of a digital_ocean_droplet_facts module in mainline Ansible.
 
 Requirements
 ------------
+This role uses the json_query Ansible filter, so the [jmespath](http://jmespath.org/) Python module must be installed in the controlling node.
 
 Role Variables
 --------------
-gdoi_token: the DO API token, you should create one for your user n digitalocean.com. If not passed, the DO_TOKEN environment variable will be used.
+`gdoi_token`: the DO API token, you should create one for your user in digitalocean.com. If not passed, the DO_API_TOKEN environment variable will be used.
 
 Dependencies
 ------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```yaml
+- hosts: localhost
+  environment:
+    DO_API_TOKEN: <Digital Ocean API token string>
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+  roles:
+    - role: get_do_inventory
+
+  post_tasks:
+    - name: Print the hosts added in the default group 
+      debug: 
+        msg: "{{ groups['digitalocean_droplets'] }}"
+
+- hosts: digitalocean_droplets
+  gather_facts: no
+
+  tasks:
+    - name: Print the facts from Digital Ocean present in the inventory
+      debug: 
+        msg: "{{ digitalocean_facts | }}"
+```
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Hugo F. Gonzalez  https://github.com/hugonz
