@@ -1,7 +1,7 @@
 ---
 - name: get the API token from an environment variable
   set_fact:
-    gdoi_token: "{{ lookup('ENV', 'DO_TOKEN') }}"
+    gdoi_token: "{{ lookup('ENV', 'DO_API_TOKEN') }}"
   when: gdoi_token is not defined
 
 - name: assert that there is an API token
@@ -9,7 +9,7 @@
     that: gdoi_token is defined 
     fail_msg: > 
       Digital Ocean API token is not defined. You must provide either Ansible 
-      variable gdoi_token or environment variable DO_TOKEN.
+      variable gdoi_token or environment variable DO__API_TOKEN.
 
 - name: call the DO api and get all droplet information
   uri:
@@ -27,7 +27,7 @@
 - name: add new hosts to the group {{ gdoi_default_group }}
   add_host:
       name: "{{ item.name }}"
-      do_facts: "{{ item }}"
+      digitalocean_facts: "{{ item }}"
       groups: "{{ gdoi_target_group }}" 
   loop: "{{ gdoi_return_data.json | json_query('droplets[*]') }}"
 
@@ -35,7 +35,7 @@
     var: groups
 
 - debug:
-    msg: "{{ hostvars[item]['do_facts']  }}"
+    msg: "{{ hostvars[item]['digitalocean_facts']  }}"
   loop: "{{ groups['digitalocean_droplets'] }}"
     #msg: "{{ gdoi_return_data }}"
 # - name: parse the result and set a fact as a return object
