@@ -1,42 +1,33 @@
 ---
-- name: get the API token from an environment variable
+- name: Get the API token from an environment variable
   set_fact:
     doim_token: "{{ lookup('ENV', 'DO_API_TOKEN') }}"
   when: doim_token is not defined
 
-- name: assert that there is an API token
+- name: Make sure there is an API token
   assert:
     that: doim_token is defined 
     fail_msg: > 
       Digital Ocean API token is not defined. You must provide either Ansible 
-      variable doim_token or environment variable DO__API_TOKEN.
+      variable doim_token or environment variable DO_API_TOKEN.
 
-- name: call the DO api and get all droplet information
+- name: Call the Digital Ocean API and get all droplet information
   uri:
     url: "{{ doim_api_url }}"
-    follow_redirects: all # not required. choices: all;none;safe. Whether or not the URI module should follow redirects. C(all) will follow all redirects. C(safe) will follow only "safe" redirects, where "safe" means that the client is only doing a GET or HEAD on the URI to which it is being redirected. C(none) will not follow any redirects. Note that C(yes) and C(no) choices are accepted for backwards compatibility, where C(yes) is the equivalent of C(all) and C(no) is the equivalent of C(safe). C(yes) and C(no) are deprecated and will be removed in some future version of Ansible.
+    # We should not open ourselves to spoofing, 
+    validate_certs: yes 
     headers: 
       Authorization: Bearer {{ doim_token }}
-    validate_certs: yes # not required. If C(no), SSL certificates will not be validated.  This should only set to C(no) used on personally controlled sites using self-signed certificates.  Prior to 1.9.2 the code defaulted to C(no).
   register: doim_return_data
 
-- name: print the list of droplets
+- name: DEBUG print the list of droplets
   debug:
     msg: "{{ doim_return_data.json | json_query('droplets[*].name') }}"
+  verbosity: 2
   
-- name: add new hosts to the group {{ doim_default_group }}
+- name: Add new hosts and Digital Ocean facts to the group {{ doim_default_group }}
   add_host:
       name: "{{ item.name }}"
       digitalocean_facts: "{{ item }}"
       groups: "{{ doim_target_group }}" 
   loop: "{{ doim_return_data.json | json_query('droplets[*]') }}"
-
-- debug:
-    var: groups
-
-- debug:
-    msg: "{{ hostvars[item]['digitalocean_facts']  }}"
-  loop: "{{ groups['digitalocean_droplets'] }}"
-    #msg: "{{ doim_return_data }}"
-# - name: parse the result and set a fact as a return object
-
