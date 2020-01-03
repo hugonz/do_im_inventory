@@ -1,2 +1,8 @@
 ---
-# defaults file for get_do_inventory
+# group name to add hosts in by default. We should not pollute the inventory with hosts outside any groups.
+doim_target_group: digitalocean_droplets
+
+# published URL for Digital Ocean API v2
+doim_api_url: https://api.digitalocean.com/v2/droplets
+
+# 
