@@ -7,7 +7,7 @@
 - name: Make sure there is an API token
   assert:
     that: doim_token is defined 
-    fail_msg: > 
+    msg: > 
       Digital Ocean API token is not defined. You must provide either Ansible 
       variable doim_token or environment variable DO_API_TOKEN.
 
@@ -23,7 +23,7 @@
 - name: DEBUG print the list of droplets
   debug:
     msg: "{{ doim_return_data.json | json_query('droplets[*].name') }}"
-  verbosity: 2
+    verbosity: 2
   
 - name: Add new hosts and Digital Ocean facts to the group {{ doim_default_group }}
   add_host:

@@ -24,7 +24,7 @@ Example Playbook
     DO_API_TOKEN: <Digital Ocean API token string>
 
   roles:
-    - role: get_do_inventory
+    - role: do_im_inventory
 
   post_tasks:
     - name: Print the hosts added in the default group 
