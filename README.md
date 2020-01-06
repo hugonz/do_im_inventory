@@ -37,7 +37,7 @@ Example Playbook
   tasks:
     - name: Print the facts from Digital Ocean present in the inventory
       debug: 
-        msg: "{{ digitalocean_facts | }}"
+        msg: "{{ digitalocean_facts }}"
 ```
 
 License
