@@ -1,4 +1,4 @@
-Role Name
+do_im_inventory
 =========
 
 This role calls the v2 API for Digital Ocean and build an in-memory inventory for the user who owns the provided API key. I wrote this role to fix the lack of a digital_ocean_droplet_facts module in mainline Ansible.
