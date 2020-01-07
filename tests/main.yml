@@ -4,3 +4,8 @@
   roles:
     - role: ../..
 
+  post_tasks:
+    - name: print debugging information
+      debug:
+        verbosity: 2
+        msg: "{{ groups['digitalocean_droplets'] }}"

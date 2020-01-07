@@ -1,11 +1,11 @@
-Role Name
+do_im_inventory
 =========
 
 This role calls the v2 API for Digital Ocean and build an in-memory inventory for the user who owns the provided API key. I wrote this role to fix the lack of a digital_ocean_droplet_facts module in mainline Ansible.
 
 Requirements
 ------------
-This role uses the json_query Ansible filter, so the [jmespath](http://jmespath.org/) Python module must be installed in the controlling node.
+None.
 
 Role Variables
 --------------
@@ -37,7 +37,7 @@ Example Playbook
   tasks:
     - name: Print the facts from Digital Ocean present in the inventory
       debug: 
-        msg: "{{ digitalocean_facts | }}"
+        msg: "{{ digitalocean_facts }}"
 ```
 
 License
