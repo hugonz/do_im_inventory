@@ -5,7 +5,7 @@ This role calls the v2 API for Digital Ocean and build an in-memory inventory fo
 
 Requirements
 ------------
-This role uses the json_query Ansible filter, so the [jmespath](http://jmespath.org/) Python module must be installed in the controlling node.
+None.
 
 Role Variables
 --------------

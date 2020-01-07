@@ -30,4 +30,4 @@
       name: "{{ item.name }}"
       digitalocean_facts: "{{ item }}"
       groups: "{{ doim_target_group }}" 
-  loop: "{{ doim_return_data.json | json_query('droplets[*]') }}"
+  loop: "{{ doim_return_data.json.droplets }}"
