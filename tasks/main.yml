@@ -6,17 +6,17 @@
 
 - name: Make sure there is an API token
   assert:
-    that: doim_token is defined 
-    msg: > 
-      Digital Ocean API token is not defined. You must provide either Ansible 
+    that: doim_token is defined
+    msg: >
+      Digital Ocean API token is not defined. You must provide either Ansible
       variable doim_token or environment variable DO_API_TOKEN.
 
 - name: Call the Digital Ocean API and get all droplet information
   uri:
     url: "{{ doim_api_url }}"
     # We should not open ourselves to spoofing, 
-    validate_certs: yes 
-    headers: 
+    validate_certs: yes
+    headers:
       Authorization: Bearer {{ doim_token }}
   register: doim_return_data
 
@@ -24,10 +24,10 @@
   debug:
     msg: "{{ doim_return_data.json | json_query('droplets[*].name') }}"
     verbosity: 2
-  
+
 - name: Add new hosts and Digital Ocean facts to the group {{ doim_default_group }}
   add_host:
       name: "{{ item.name }}"
       digitalocean_facts: "{{ item }}"
-      groups: "{{ doim_target_group }}" 
+      groups: "{{ doim_target_group }}"
   loop: "{{ doim_return_data.json.droplets }}"
